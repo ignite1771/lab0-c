@@ -40,21 +40,25 @@ void q_free(queue_t *q)
  */
 bool q_insert_head(queue_t *q, char *s)
 {
-    list_ele_t *newh;
-    newh = malloc(sizeof(list_ele_t));
-    if (q == NULL || newh == NULL) {
+    if (q == NULL) {
         return false;
     } else {
-        newh->value = malloc(sizeof s);
-        if (newh->value == NULL) {
-            free(newh);
+        list_ele_t *newh;
+        newh = malloc(sizeof(list_ele_t));
+        if (newh == NULL) {
             return false;
         } else {
-            strncpy(newh->value, s, strlen(s) + 1);
-            newh->next = q->head;
-            q->head = newh;
-            q->size += 1;
-            return true;
+            newh->value = malloc(sizeof s);
+            if (newh->value == NULL) {
+                free(newh);
+                return false;
+            } else {
+                strncpy(newh->value, s, strlen(s) + 1);
+                newh->next = q->head;
+                q->head = newh;
+                q->size += 1;
+                return true;
+            }
         }
     }
 }
