@@ -22,11 +22,15 @@ queue_t *q_new()
 /* Free all storage used by queue */
 void q_free(queue_t *q)
 {
-    list_ele_t *curh = q->head;
-    while (curh != NULL) {
-        free(curh->value);
+    if (q != NULL) {
+        list_ele_t *curh = q->head;
+        while (curh != NULL) {
+            list_ele_t *tmp = curh;
+            curh = curh->next;
+            free(tmp->value);
+            free(tmp);
+        }
         free(curh);
-        curh = curh->next;
     }
     free(q);
 }
