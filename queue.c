@@ -12,26 +12,28 @@
 queue_t *q_new()
 {
     queue_t *q = malloc(sizeof(queue_t));
-    if (q != NULL) {
-        q->head = NULL;
-        q->size = 0;
-    }
+    if (!q)
+        return NULL;
+
+    q->head = NULL;
+    q->size = 0;
     return q;
 }
 
 /* Free all storage used by queue */
 void q_free(queue_t *q)
 {
-    if (q != NULL) {
-        list_ele_t *curh = q->head;
-        while (curh != NULL) {
-            list_ele_t *tmp = curh;
-            curh = curh->next;
-            free(tmp->value);
-            free(tmp);
-        }
-        free(curh);
+    if (!q)
+        return;
+
+    list_ele_t *curh = q->head;
+    while (curh) {
+        list_ele_t *tmp = curh;
+        curh = curh->next;
+        free(tmp->value);
+        free(tmp);
     }
+    free(curh);
     free(q);
 }
 
@@ -44,27 +46,25 @@ void q_free(queue_t *q)
  */
 bool q_insert_head(queue_t *q, char *s)
 {
-    if (q == NULL) {
+    if (!q)
         return false;
-    } else {
-        list_ele_t *newh;
-        newh = malloc(sizeof(list_ele_t));
-        if (newh == NULL) {
-            return false;
-        } else {
-            newh->value = malloc(sizeof s);
-            if (newh->value == NULL) {
-                free(newh);
-                return false;
-            } else {
-                strncpy(newh->value, s, strlen(s) + 1);
-                newh->next = q->head;
-                q->head = newh;
-                q->size += 1;
-                return true;
-            }
-        }
+
+    list_ele_t *newh;
+    newh = malloc(sizeof(list_ele_t));
+    if (!newh)
+        return false;
+
+    newh->value = malloc(sizeof s);
+    if (!newh->value) {
+        free(newh);
+        return false;
     }
+
+    strncpy(newh->value, s, strlen(s) + 1);
+    newh->next = q->head;
+    q->head = newh;
+    q->size += 1;
+    return true;
 }
 
 /*
@@ -92,19 +92,17 @@ bool q_insert_tail(queue_t *q, char *s)
  */
 bool q_remove_head(queue_t *q, char *sp, size_t bufsize)
 {
-    if (q == NULL || q->head == NULL) {
+    if (!q || !q->head)
         return false;
-    } else {
-        if (sp != NULL) {
-            strncpy(sp, q->head->value, bufsize);
-        }
-        list_ele_t *oldh = q->head;
-        q->head = q->head->next;
-        free(oldh->value);
-        free(oldh);
-        q->size -= 1;
-        return true;
-    }
+
+    if (sp)
+        strncpy(sp, q->head->value, bufsize);
+    list_ele_t *oldh = q->head;
+    q->head = q->head->next;
+    free(oldh->value);
+    free(oldh);
+    q->size -= 1;
+    return true;
 }
 
 /*
@@ -113,11 +111,9 @@ bool q_remove_head(queue_t *q, char *sp, size_t bufsize)
  */
 int q_size(queue_t *q)
 {
-    if (q == NULL || q->head == NULL) {
+    if (!q || !q->head)
         return 0;
-    } else {
-        return q->size;
-    }
+    return q->size;
 }
 
 /*
