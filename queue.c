@@ -60,7 +60,7 @@ bool q_insert_head(queue_t *q, char *s)
     if (!newh)
         return false;
 
-    newh->value = malloc(sizeof s);
+    newh->value = malloc(strlen(s) + 1);
     if (!newh->value) {
         free(newh);
         return false;
@@ -92,7 +92,7 @@ bool q_insert_tail(queue_t *q, char *s)
         return false;
     newh->next = NULL;
 
-    newh->value = malloc(sizeof s);
+    newh->value = malloc(strlen(s) + 1);
     if (!newh->value) {
         free(newh);
         return false;
