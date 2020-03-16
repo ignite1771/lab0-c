@@ -32,14 +32,12 @@ void q_free(queue_t *q)
     if (!q)
         return;
 
-    list_ele_t *curh = q->head;
-    while (curh) {
-        list_ele_t *tmp = curh;
-        curh = curh->next;
-        free(tmp->value);
-        free(tmp);
+    while (q->head) {
+        list_ele_t *curh = q->head;
+        q->head = q->head->next;
+        free(curh->value);
+        free(curh);
     }
-    free(curh);
     free(q);
 }
 
