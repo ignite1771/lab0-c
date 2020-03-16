@@ -195,7 +195,7 @@ list_ele_t *merge(list_ele_t *l1, list_ele_t *l2)
     }
 }
 
-list_ele_t *mergeSortList(list_ele_t *head)
+list_ele_t *merge_sort_list(list_ele_t *head)
 {
     if (!head || !head->next)
         return head;
@@ -213,8 +213,8 @@ list_ele_t *mergeSortList(list_ele_t *head)
     slow->next = NULL;
 
     // sort each list
-    list_ele_t *l1 = mergeSortList(head);
-    list_ele_t *l2 = mergeSortList(fast);
+    list_ele_t *l1 = merge_sort_list(head);
+    list_ele_t *l2 = merge_sort_list(fast);
 
     // merge sorted l1 and l2
     return merge(l1, l2);
@@ -225,7 +225,7 @@ void q_sort(queue_t *q)
     if (!q || !q->head || !q->head->next)
         return;
 
-    q->head = mergeSortList(q->head);
+    q->head = merge_sort_list(q->head);
     // reset q->tail
     list_ele_t *curh = q->head;
     while (curh->next) {
