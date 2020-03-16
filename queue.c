@@ -118,8 +118,13 @@ bool q_remove_head(queue_t *q, char *sp, size_t bufsize)
     if (!q || !q->head)
         return false;
 
-    if (sp)
+    if (sp) {
         strncpy(sp, q->head->value, bufsize);
+        // Concatenate terminating character if bufsize is not eqaul to the
+        // length of q->head->value
+        sp[bufsize - 1] = '\0';
+    }
+
     list_ele_t *oldh = q->head;
     q->head = q->head->next;
     if (!q->head)
