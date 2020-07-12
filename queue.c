@@ -99,8 +99,13 @@ bool q_insert_tail(queue_t *q, char *s)
     }
 
     strncpy(newh->value, s, strlen(s) + 1);
-    q->tail->next = newh;
-    q->tail = newh;
+    if (!q->head && !q->tail) {
+        q->head = newh;
+        q->tail = newh;
+    } else {
+        q->tail->next = newh;
+        q->tail = newh;
+    }
     q->size += 1;
     return true;
 }
