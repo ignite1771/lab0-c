@@ -1,4 +1,6 @@
 # lab0-c
+* **Development record on HackMD:** https://hackmd.io/@ignite1771/lab0-c
+
 Assessing Your C Programming Skills
 
 This lab will give you practice in the style of programming you will need to be able to do proficiently,
