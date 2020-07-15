@@ -184,7 +184,7 @@ void q_reverse(queue_t *q)
  * element, do nothing.
  */
 
-list_ele_t *merge(list_ele_t *l1, list_ele_t *l2)
+static list_ele_t *merge(list_ele_t *l1, list_ele_t *l2)
 {
     list_ele_t *head = NULL;
     list_ele_t **tmp = &head;
@@ -209,7 +209,7 @@ list_ele_t *merge(list_ele_t *l1, list_ele_t *l2)
     return head;
 }
 
-list_ele_t *merge_sort_list(list_ele_t *head)
+static list_ele_t *merge_sort_list(list_ele_t *head)
 {
     if (!head || !head->next)
         return head;
